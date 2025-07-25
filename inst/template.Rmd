@@ -1,0 +1,20 @@
+---
+title: "eDNA dataset comparison"
+output: html_document
+params:
+  common_species_plot: NULL
+  asv_table: NULL
+---
+
+## Common and exclusive species
+
+```{r echo=FALSE, out.width="100%", fig.width=10, fig.height=4}
+params$common_species_plot
+```
+
+## ASVs
+
+```{r echo=FALSE}
+options(knitr.kable.NA = "")
+params$asv_table
+```
