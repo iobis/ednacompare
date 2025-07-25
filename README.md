@@ -3,6 +3,8 @@
 R package for comparing Darwin Core formatted eDNA datasets.
 
 ```r
+library(ednacompare)
+
 ds_1 <- read_dataset(system.file("extdata/wilderlab_dwca", package = "ednacompare"))
 ds_2 <- read_dataset(system.file("extdata/pacman_dwca", package = "ednacompare"))
 
