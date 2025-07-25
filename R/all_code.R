@@ -17,11 +17,13 @@ theme_colors <- list("one" = "#B7D1DA", "both" = "#95A3A4", "two" = "#E2E8DD", "
 
 #' Read dataset
 #' @param dataset_path Path to the dataset directory, should contain occurrence.txt and dnaderiveddata.txt
+#' @param occurrence_file Occurrence filename
+#' @param dna_file DNADerivedData filename
 #' @return Data frame
 #' @export
-read_dataset <- function(dataset_path) {
-  occurrence <- read.table(file.path(dataset_path, "occurrence.txt"), sep = "\t", header = TRUE, na.strings = "", comment.char = "", quote = "")
-  dna <- read.table(file.path(dataset_path, "dnaderiveddata.txt"), sep = "\t", header = TRUE, na.strings = "", comment.char = "", quote = "")
+read_dataset <- function(dataset_path, occurrence_file = "occurrence.txt", dna_file = "dnaderiveddata.txt") {
+  occurrence <- read.table(file.path(dataset_path, occurrence_file), sep = "\t", header = TRUE, na.strings = "", comment.char = "", quote = "")
+  dna <- read.table(file.path(dataset_path, dna_file), sep = "\t", header = TRUE, na.strings = "", comment.char = "", quote = "")
   left_join(occurrence, dna, by = "occurrenceID")
 }
 
