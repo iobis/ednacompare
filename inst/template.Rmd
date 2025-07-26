@@ -4,6 +4,7 @@ output: html_document
 params:
   common_species_plot: NULL
   asv_table: NULL
+  amplicon_length_plot: NULL
 ---
 
 ## Common and exclusive species
@@ -12,7 +13,13 @@ params:
 params$common_species_plot
 ```
 
-## ASVs
+## Amplicon lengths
+
+```{r echo=FALSE, out.width="100%", fig.width=10, fig.height=3.5}
+params$amplicon_length_plot
+```
+
+## Species level ASVs
 
 ```{r echo=FALSE}
 options(knitr.kable.NA = "")

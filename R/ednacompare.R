@@ -27,6 +27,27 @@ read_dataset <- function(dataset_path, occurrence_file = "occurrence.txt", dna_f
   left_join(occurrence, dna, by = "occurrenceID")
 }
 
+#' Create amplicon length plot
+#' @param ds_1 First dataset
+#' @param ds_2 Second dataset
+#' @param labels Dataset labels
+#' @return A ggplot object
+#' @export
+create_amplicon_length_plot <- function(ds_1, ds_2, labels) {
+  df <- bind_rows(
+    ds_1 %>% mutate(dataset = labels[1]) %>% mutate(amplicon_length = nchar(DNA_sequence)) %>% select(target_gene, dataset, amplicon_length),
+    ds_2 %>% mutate(dataset = labels[2]) %>% mutate(amplicon_length = nchar(DNA_sequence)) %>% select(target_gene, dataset, amplicon_length)
+  )
+  
+  ggplot(df) +
+    geom_density(aes(x = amplicon_length, color = target_gene), trim = TRUE) +
+    facet_wrap(~dataset, ncol = 1) +
+    scale_color_brewer(palette = "Paired") +
+    theme_minimal() +
+    theme(panel.grid.minor.y = element_blank(), panel.grid.major.y = element_blank(), axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank()) +
+    xlab("Amplicon length")
+}
+
 #' Create common species plot
 #' @param ds_1 First dataset
 #' @param ds_2 Second dataset
@@ -205,9 +226,11 @@ create_asv_table_reactable <- function(ds_1, ds_2, labels) {
 compare_datasets <- function(ds_1, ds_2, labels = c("1", "2")) {
   common_species_plot <- create_common_species_plot(ds_1, ds_2, labels)
   asv_table <- create_asv_table_reactable(ds_1, ds_2, labels)
+  amplicon_length_plot <- create_amplicon_length_plot(ds_1, ds_2, labels)
   list(
     common_species_plot = common_species_plot,
-    asv_table = asv_table
+    asv_table = asv_table,
+    amplicon_length_plot = amplicon_length_plot
   )
 }
 
